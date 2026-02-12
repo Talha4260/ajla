@@ -19,28 +19,31 @@ body{
   font-family:Poppins;
   text-align:center;
   overflow:hidden;
+  padding:20px;
 }
 
 .container{
+  max-width:700px;
+  width:100%;
   animation: fadeIn 1.2s ease forwards;
 }
 
 h1{
   font-family:"Playfair Display";
-  font-size:64px;
+  font-size:clamp(40px,8vw,64px);
   margin:0;
   color:#7a2b3c;
 }
 
 h2{
   font-family:"Playfair Display";
-  font-size:38px;
+  font-size:clamp(24px,6vw,38px);
   color:#ff4f87;
   margin:10px 0 20px;
 }
 
 p{
-  font-size:18px;
+  font-size:clamp(16px,4vw,18px);
   color:#555;
   margin-bottom:40px;
 }
@@ -49,6 +52,8 @@ p{
   display:flex;
   gap:20px;
   justify-content:center;
+  flex-wrap:wrap;
+  position:relative;
 }
 
 button{
@@ -72,6 +77,7 @@ button{
   background:white;
   color:#ff2f6d;
   border:2px solid #ff2f6d;
+  position:absolute;
 }
 
 button:hover{
@@ -83,6 +89,13 @@ button:hover{
   margin-top:40px;
   font-style:italic;
   color:#444;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
 }
 
 @keyframes pop{
@@ -99,6 +112,8 @@ button:hover{
 
 <body>
 
+<canvas id="confetti"></canvas>
+
 <div class="container">
 
   <h1>Ajla ❤️</h1>
@@ -110,8 +125,8 @@ button:hover{
   </p>
 
   <div class="buttons">
-    <button class="btn-primary" onclick="goYes()">Yes, I will ❤️</button>
-    <button class="btn-secondary" onclick="goYes()">Of course!</button>
+    <button class="btn-primary" onclick="celebrate()">Yes, I will ❤️</button>
+    <button class="btn-secondary" id="noBtn">No</button>
   </div>
 
   <div class="quote">
@@ -121,9 +136,58 @@ button:hover{
 </div>
 
 <script>
-function goYes(){
-  window.location.href = "yes.html";
+
+// runaway NO button (desktop + mobile)
+const noBtn = document.getElementById("noBtn");
+
+function moveButton(){
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
 }
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("click", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
+
+// confetti celebration
+function celebrate(){
+  startConfetti();
+  setTimeout(()=>{
+    window.location.href="yes.html";
+  },1500);
+}
+
+// simple confetti system
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let pieces = [];
+
+function startConfetti(){
+  for(let i=0;i<120;i++){
+    pieces.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height- canvas.height,
+      size:8,
+      speed:Math.random()*3+2
+    });
+  }
+  animate();
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pieces.forEach(p=>{
+    ctx.fillRect(p.x,p.y,p.size,p.size);
+    p.y+=p.speed;
+  });
+  requestAnimationFrame(animate);
+}
+
 </script>
 
 </body>
