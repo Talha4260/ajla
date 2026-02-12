@@ -137,58 +137,43 @@ canvas{
 
 <script>
 
-// runaway NO button (desktop + mobile)
 const noBtn = document.getElementById("noBtn");
 
+let moveInterval;
+
+// move to random safe position
 function moveButton(){
-  const x = Math.random() * (window.innerWidth - 100);
-  const y = Math.random() * (window.innerHeight - 50);
+  const padding = 80;
+
+  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.position = "fixed";
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
 }
 
-noBtn.addEventListener("mouseover", moveButton);
+// start infinite escape when user approaches
+function startEscape(){
+  clearInterval(moveInterval);
+  moveInterval = setInterval(moveButton, 500); // jumps every 0.5s
+}
+
+// trigger on desktop hover
+noBtn.addEventListener("mouseenter", startEscape);
+
+// trigger on phone touch
+noBtn.addEventListener("touchstart", startEscape);
+
+// also run away if they somehow click it
 noBtn.addEventListener("click", moveButton);
-noBtn.addEventListener("touchstart", moveButton);
-
-// confetti celebration
-function celebrate(){
-  startConfetti();
-  setTimeout(()=>{
-    window.location.href="yes.html";
-  },1500);
-}
-
-// simple confetti system
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let pieces = [];
-
-function startConfetti(){
-  for(let i=0;i<120;i++){
-    pieces.push({
-      x:Math.random()*canvas.width,
-      y:Math.random()*canvas.height- canvas.height,
-      size:8,
-      speed:Math.random()*3+2
-    });
-  }
-  animate();
-}
-
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  pieces.forEach(p=>{
-    ctx.fillRect(p.x,p.y,p.size,p.size);
-    p.y+=p.speed;
-  });
-  requestAnimationFrame(animate);
-}
 
 </script>
 
+
 </body>
 </html>
+
