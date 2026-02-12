@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(180deg,#f6c8d1,#e6a0b0);
+  font-family:Poppins;
+  text-align:center;
+  overflow:hidden;
+}
+
+.container{
+  animation: fadeIn 1.2s ease forwards;
+}
+
+h1{
+  font-family:"Playfair Display";
+  font-size:64px;
+  margin:0;
+  color:#7a2b3c;
+}
+
+h2{
+  font-family:"Playfair Display";
+  font-size:38px;
+  color:#ff4f87;
+  margin:10px 0 20px;
+}
+
+p{
+  font-size:18px;
+  color:#555;
+  margin-bottom:40px;
+}
+
+.buttons{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+}
+
+button{
+  padding:16px 32px;
+  font-size:18px;
+  border-radius:40px;
+  border:none;
+  cursor:pointer;
+  transition:all .25s ease;
+  transform:scale(.9);
+  animation:pop 0.6s ease forwards;
+}
+
+.btn-primary{
+  background:linear-gradient(45deg,#ff4f87,#ff2f6d);
+  color:white;
+  box-shadow:0 12px 25px rgba(0,0,0,.2);
+}
+
+.btn-secondary{
+  background:white;
+  color:#ff2f6d;
+  border:2px solid #ff2f6d;
+}
+
+button:hover{
+  transform:scale(1.08);
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+.quote{
+  margin-top:40px;
+  font-style:italic;
+  color:#444;
+}
+
+@keyframes pop{
+  to{ transform:scale(1); }
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(30px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Ajla ❤️</h1>
+  <h2>Will you be my Valentine?</h2>
+
+  <p>
+    Every moment with you feels like a dream.  
+    I can't imagine celebrating this day with anyone else.
+  </p>
+
+  <div class="buttons">
+    <button class="btn-primary" onclick="goYes()">Yes, I will ❤️</button>
+    <button class="btn-secondary" onclick="goYes()">Of course!</button>
+  </div>
+
+  <div class="quote">
+    “You are my today and all of my tomorrows.”
+  </div>
+
+</div>
+
+<script>
+function goYes(){
+  window.location.href = "yes.html";
+}
+</script>
+
+</body>
+</html>
